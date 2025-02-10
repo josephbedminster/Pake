@@ -52,20 +52,6 @@ on:
           - 'deb'
           - 'appimage'
           - 'rpm'
-      activation_shortcut:
-        description: 'Activation Shortcut, Optional'
-        required: false
-        default: 'CmdOrControl+Shift+O'
-      disabled_web_shortcuts:
-        description: 'Disable Web Shortcuts, Optional'
-        required: false
-        type: boolean
-        default: true
-      user_agent:
-        description: 'User Agent, Optional'
-        required: false
-        default: 'OrbSoftware'
-
 
 jobs:
   build:
@@ -136,7 +122,7 @@ jobs:
 
       - name: Build with pake-cli
         run: |
-          node ./script/build_with_pake_cli.js
+          node ./script/build_with_pake_cli.js --activation-shortcut CmdOrControl+Shift+O --disabled-web-shortcuts --user-agent OrbSoftware
         env:
           URL: ${{ inputs.url }}
           NAME: ${{ inputs.name }}
@@ -147,9 +133,6 @@ jobs:
           FULLSCREEN: ${{ inputs.fullscreen }}
           MULTI_ARCH: ${{ inputs.multi_arch }}
           TARGETS: ${{ inputs.targets }}
-          ACTIVATION_SHORTCUT: ${{ inputs.activation_shortcut }}
-          DISABLED_WEB_SHORTCUTS: ${{ inputs.disabled_web_shortcuts }}
-          USER_AGENT: ${{ inputs.user_agent }}
 
       - name: Upload archive
         uses: actions/upload-artifact@v4
